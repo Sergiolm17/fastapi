@@ -16,4 +16,4 @@ watchfiles==0.18.1
 websockets==10.4
 
 
-rembg==latest
+rembg==2.0.43
