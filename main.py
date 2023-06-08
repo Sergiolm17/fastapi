@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, Response
 from fastapi.middleware.cors import CORSMiddleware
 from rembg import remove
 from PIL import Image
@@ -31,7 +31,12 @@ async def remove_background(file: UploadFile = File(...)):
     output_image.save(output_bytes, format="PNG")
     output_bytes.seek(0)
 
-    return {"background_removed_image": output_bytes}
+    # Devolver archivo resultante
+    response = Response(content=output_bytes.getvalue(), media_type="image/png")
+    response.headers[
+        "Content-Disposition"
+    ] = "attachment; filename=background_removed.png"
+    return response
 
 
 # Punto de entrada principal
