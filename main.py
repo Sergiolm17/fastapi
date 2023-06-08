@@ -18,6 +18,10 @@ async def root():
 
 @app.post("/remove_background")
 async def process_image(file: UploadFile = File(...)):
+    def remove_background(image_bytes):
+        result = remove(image_bytes)
+        return result
+
     image = Image.open(io.BytesIO(await file.read())).convert("RGBA")
     image_bytes = image.tobytes()
     output_image = remove_background(image_bytes)
